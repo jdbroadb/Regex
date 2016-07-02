@@ -29,16 +29,16 @@ extension String {
     }
   }
 #else
-  public mutating func replaceFirstMatching(regex: Regex, with template: String) {
+  public mutating func replaceFirstMatching(_ regex: Regex, with template: String) {
     if let match = regex.match(self) {
       let replacement = regex
         .regularExpression
-        .replacementStringForResult(match.matchResult,
-          inString: self,
+        .replacementString(for: match.matchResult,
+          in: self,
           offset: 0,
           template: template)
 
-      replaceRange(match.range, with: replacement)
+      replaceSubrange(match.range, with: replacement)
     }
   }
 #endif
@@ -66,7 +66,7 @@ extension String {
     replaceFirstMatching(Regex(pattern), with: template)
   }
 #else
-  public mutating func replaceFirstMatching(pattern: StaticString, with template: String) {
+  public mutating func replaceFirstMatching(_ pattern: StaticString, with template: String) {
     replaceFirstMatching(Regex(pattern), with: template)
   }
 #endif
@@ -97,7 +97,7 @@ extension String {
     return string
   }
 #else
-  public func replacingFirstMatching(regex: Regex, with template: String) -> String {
+  public func replacingFirstMatching(_ regex: Regex, with template: String) -> String {
     var string = self
     string.replaceFirstMatching(regex, with: template)
     return string
@@ -129,7 +129,7 @@ extension String {
     return replacingFirstMatching(Regex(pattern), with: template)
   }
 #else
-  public func replacingFirstMatching(pattern: StaticString, with template: String) -> String {
+  public func replacingFirstMatching(_ pattern: StaticString, with template: String) -> String {
     return replacingFirstMatching(Regex(pattern), with: template)
   }
 #endif
@@ -164,16 +164,16 @@ extension String {
     }
   }
 #else
-  public mutating func replaceAllMatching(regex: Regex, with template: String) {
-    for match in regex.allMatches(self).reverse() {
+  public mutating func replaceAllMatching(_ regex: Regex, with template: String) {
+    for match in regex.allMatches(self).reversed() {
       let replacement = regex
         .regularExpression
-        .replacementStringForResult(match.matchResult,
-          inString: self,
+        .replacementString(for: match.matchResult,
+          in: self,
           offset: 0,
           template: template)
 
-      replaceRange(match.range, with: replacement)
+      replaceSubrange(match.range, with: replacement)
     }
   }
 #endif
@@ -201,7 +201,7 @@ extension String {
     replaceAllMatching(Regex(pattern), with: template)
   }
 #else
-  public mutating func replaceAllMatching(pattern: StaticString, with template: String) {
+  public mutating func replaceAllMatching(_ pattern: StaticString, with template: String) {
     replaceAllMatching(Regex(pattern), with: template)
   }
 #endif
@@ -232,7 +232,7 @@ extension String {
     return string
   }
 #else
-  public func replacingAllMatching(regex: Regex, with template: String) -> String {
+  public func replacingAllMatching(_ regex: Regex, with template: String) -> String {
     var string = self
     string.replaceAllMatching(regex, with: template)
     return string
@@ -264,7 +264,7 @@ extension String {
     return replacingAllMatching(Regex(pattern), with: template)
   }
 #else
-  public func replacingAllMatching(pattern: StaticString, with template: String) -> String {
+  public func replacingAllMatching(_ pattern: StaticString, with template: String) -> String {
     return replacingAllMatching(Regex(pattern), with: template)
   }
 #endif

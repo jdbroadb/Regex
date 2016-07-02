@@ -33,8 +33,8 @@ public struct MatchResult {
   /// - returns: The character range of the matched string.
   internal var range: Range<String.Index> {
     let utf16range = _result.range
-    let start = String.Index(utf16range.startIndex, within: _string)!
-    let end = String.Index(utf16range.endIndex, within: _string)!
+    let start = String.Index(utf16range.lowerBound, within: _string)!
+    let end = String.Index(utf16range.upperBound, within: _string)!
     return start..<end
   }
 
@@ -58,14 +58,14 @@ public struct MatchResult {
 
   // MARK: Internal initialisers
 
-  internal var matchResult: NSTextCheckingResult {
+  internal var matchResult: TextCheckingResult {
     return _result.result
   }
 
   private let _result: _MatchResult
   private let _string: String
 
-  internal init(_ string: String, _ result: NSTextCheckingResult) {
+  internal init(_ string: String, _ result: TextCheckingResult) {
     self._result = _MatchResult(string.utf16, result)
     self._string = string
   }
@@ -76,9 +76,9 @@ public struct MatchResult {
 private final class _MatchResult {
 
   private let string: String.UTF16View
-  private let result: NSTextCheckingResult
+  private let result: TextCheckingResult
 
-  private init(_ string: String.UTF16View, _ result: NSTextCheckingResult) {
+  private init(_ string: String.UTF16View, _ result: TextCheckingResult) {
     self.string = string
     self.result = result
   }

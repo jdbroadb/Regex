@@ -2,7 +2,7 @@ public struct Regex: CustomStringConvertible, CustomDebugStringConvertible {
 
   // MARK: Initialisation
 
-  internal let regularExpression: NSRegularExpression
+  internal let regularExpression: RegularExpression
 
   /// Create a `Regex` based on a pattern string.
   ///
@@ -16,7 +16,7 @@ public struct Regex: CustomStringConvertible, CustomDebugStringConvertible {
   ///
   /// - throws: A value of `ErrorType` describing the invalid regular expression.
   public init(string pattern: String, options: Options = []) throws {
-    regularExpression = try NSRegularExpression(
+    regularExpression = try RegularExpression(
       pattern: pattern,
       options: options.toNSRegularExpressionOptions())
   }
@@ -36,7 +36,7 @@ public struct Regex: CustomStringConvertible, CustomDebugStringConvertible {
   ///       For details, see `Regex.Options`.
   public init(_ pattern: StaticString, options: Options = []) {
     do {
-      regularExpression = try NSRegularExpression(
+      regularExpression = try RegularExpression(
         pattern: String(pattern),
         options: options.toNSRegularExpressionOptions())
     } catch {
@@ -59,7 +59,7 @@ public struct Regex: CustomStringConvertible, CustomDebugStringConvertible {
     return _matches(self, string)
   }
 #else
-  public func matches(string: String) -> Bool {
+  public func matches(_ string: String) -> Bool {
     return _matches(self, string)
   }
 #endif
@@ -86,9 +86,9 @@ public struct Regex: CustomStringConvertible, CustomDebugStringConvertible {
     return match
   }
 #else
-  public func match(string: String) -> MatchResult? {
+  public func match(_ string: String) -> MatchResult? {
     let match = regularExpression
-      .firstMatchInString(string, options: [], range: string.entireRange)
+      .firstMatch(in: string, options: [], range: string.entireRange)
       .map { MatchResult(string, $0) }
     Regex._lastMatch = match
     return match
@@ -113,9 +113,9 @@ public struct Regex: CustomStringConvertible, CustomDebugStringConvertible {
     return matches
   }
 #else
-  public func allMatches(string: String) -> [MatchResult] {
+  public func allMatches(_ string: String) -> [MatchResult] {
     let matches = regularExpression
-      .matchesInString(string, options: [], range: string.entireRange)
+      .matches(in: string, options: [], range: string.entireRange)
       .map { MatchResult(string, $0) }
     if let firstMatch = matches.first { Regex._lastMatch = firstMatch }
     return matches

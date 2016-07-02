@@ -1,9 +1,9 @@
-internal extension NSTextCheckingResult {
+internal extension TextCheckingResult {
   var ranges: [NSRange] {
 #if swift(>=3.0)
     return stride(from: 0, to: numberOfRanges, by: 1).map(range(at:))
 #else
-    return 0.stride(to: numberOfRanges, by: 1).map(rangeAtIndex)
+    return 0.stride(to: numberOfRanges, by: 1).map(range)
 #endif
   }
 }

@@ -17,11 +17,11 @@ internal final class ThreadLocal<T> {
     }
   }
 
-  private var _currentThread: NSThread {
+  private var _currentThread: Thread {
 #if swift(>=3.0)
-    return NSThread.current()
+    return Thread.current()
 #else
-    return NSThread.currentThread()
+    return Thread.current()
 #endif
   }
 
