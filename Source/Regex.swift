@@ -2,7 +2,7 @@ public struct Regex: CustomStringConvertible, CustomDebugStringConvertible {
 
   // MARK: Initialisation
 
-  internal let regularExpression: RegularExpression
+  internal let regularExpression: NSRegularExpression
 
   /// Create a `Regex` based on a pattern string.
   ///
@@ -16,7 +16,7 @@ public struct Regex: CustomStringConvertible, CustomDebugStringConvertible {
   ///
   /// - throws: A value of `ErrorType` describing the invalid regular expression.
   public init(string pattern: String, options: Options = []) throws {
-    regularExpression = try RegularExpression(
+    regularExpression = try NSRegularExpression(
       pattern: pattern,
       options: options.toNSRegularExpressionOptions())
   }
@@ -36,8 +36,8 @@ public struct Regex: CustomStringConvertible, CustomDebugStringConvertible {
   ///       For details, see `Regex.Options`.
   public init(_ pattern: StaticString, options: Options = []) {
     do {
-      regularExpression = try RegularExpression(
-        pattern: String(pattern),
+      regularExpression = try NSRegularExpression(
+        pattern: String(describing: pattern),
         options: options.toNSRegularExpressionOptions())
     } catch {
       preconditionFailure("unexpected error creating regex: \(error)")
@@ -64,7 +64,7 @@ public struct Regex: CustomStringConvertible, CustomDebugStringConvertible {
   }
 #endif
 
-  private let _matches: (Regex, String) -> Bool = { regex, string in
+  fileprivate let _matches: (Regex, String) -> Bool = { regex, string in
     return regex.match(string) != nil
   }
 
@@ -140,9 +140,9 @@ public struct Regex: CustomStringConvertible, CustomDebugStringConvertible {
     return _lastMatch
   }
 
-  private static let _lastMatchKey = "me.sharplet.Regex.lastMatch"
+  fileprivate static let _lastMatchKey = "me.sharplet.Regex.lastMatch"
 
-  private static var _lastMatch: MatchResult? {
+  fileprivate static var _lastMatch: MatchResult? {
     get { return ThreadLocal(_lastMatchKey).value }
     set { ThreadLocal(_lastMatchKey).value = newValue }
   }

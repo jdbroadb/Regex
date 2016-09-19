@@ -47,8 +47,8 @@ internal extension Options {
   /// Transform an instance of `Regex.Options` into the equivalent `NSRegularExpressionOptions`.
   ///
   /// - returns: The equivalent `NSRegularExpressionOptions`.
-  func toNSRegularExpressionOptions() -> RegularExpression.Options {
-    var options = RegularExpression.Options()
+  func toNSRegularExpressionOptions() -> NSRegularExpression.Options {
+    var options = NSRegularExpression.Options()
 #if swift(>=3.0)
     if contains(.IgnoreCase) { options.insert(.caseInsensitive) }
     if contains(.IgnoreMetacharacters) { options.insert(.ignoreMetacharacters) }

@@ -62,8 +62,8 @@ public struct MatchResult {
     return _result.result
   }
 
-  private let _result: _MatchResult
-  private let _string: String
+  fileprivate let _result: _MatchResult
+  fileprivate let _string: String
 
   internal init(_ string: String, _ result: TextCheckingResult) {
     self._result = _MatchResult(string.utf16, result)
@@ -75,10 +75,10 @@ public struct MatchResult {
 // Use of a private class allows for lazy vars without the need for `mutating`.
 private final class _MatchResult {
 
-  private let string: String.UTF16View
-  private let result: TextCheckingResult
+  fileprivate let string: String.UTF16View
+  fileprivate let result: TextCheckingResult
 
-  private init(_ string: String.UTF16View, _ result: TextCheckingResult) {
+  fileprivate init(_ string: String.UTF16View, _ result: TextCheckingResult) {
     self.string = string
     self.result = result
   }
@@ -99,7 +99,7 @@ private final class _MatchResult {
     return self.substringFromRange(self.string, self.rangeFromNSRange(self.string, self.result.range)!)
   }()
 
-  private let rangeFromNSRange: (String.UTF16View, NSRange) -> Range<String.UTF16Index>? = { string, range in
+  fileprivate let rangeFromNSRange: (String.UTF16View, NSRange) -> Range<String.UTF16Index>? = { string, range in
     guard range.location != NSNotFound else { return nil }
 #if swift(>=3.0)
     let start = string.startIndex.advanced(by: range.location)
@@ -111,8 +111,8 @@ private final class _MatchResult {
     return start..<end
   }
 
-  private let substringFromRange: (String.UTF16View, Range<String.UTF16Index>) -> String = { string, range in
-    return String(string[range])
+  fileprivate let substringFromRange: (String.UTF16View, Range<String.UTF16Index>) -> String = { string, range in
+    return String(describing: string[range])
   }
 
 }

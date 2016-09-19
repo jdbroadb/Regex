@@ -17,9 +17,9 @@ internal final class ThreadLocal<T> {
     }
   }
 
-  private var _currentThread: Thread {
+  fileprivate var _currentThread: Thread {
 #if swift(>=3.0)
-    return Thread.current()
+    return Thread.current
 #else
     return Thread.current()
 #endif
